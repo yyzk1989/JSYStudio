@@ -1,0 +1,20 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(376,5): warning MSB8004: Intermediate 디렉터리가 슬래시로 끝나지 않습니다. Intermediate 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+  180611_sample.cpp
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(11): warning C4477: 'printf' : 서식 문자열 '%0x'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'int *'입니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(11): warning C4313: 'printf': 서식 문자열의 '%x'이(가) 인수 1('int *' 형식)과(와) 충돌합니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(34): warning C4477: 'printf' : 서식 문자열 '%08x'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'char *'입니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(34): warning C4313: 'printf': 서식 문자열의 '%x'이(가) 인수 1('char *' 형식)과(와) 충돌합니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(37): warning C4477: 'printf' : 서식 문자열 '%08X'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'char *'입니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(37): warning C4313: 'printf': 서식 문자열의 '%X'이(가) 인수 1('char *' 형식)과(와) 충돌합니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(47): warning C4477: 'printf' : 서식 문자열 '%08X'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'int **'입니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(47): warning C4313: 'printf': 서식 문자열의 '%X'이(가) 인수 1('int **' 형식)과(와) 충돌합니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(109): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 3의 형식이 '__int64'입니다.
+  e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(109): note: 서식 문자열에서 '%lld'을(를) 사용하는 것이 좋습니다.
+  e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(109): note: 서식 문자열에서 '%Id'을(를) 사용하는 것이 좋습니다.
+  e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(109): note: 서식 문자열에서 '%I64d'을(를) 사용하는 것이 좋습니다.
+e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(110): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 3의 형식이 '__int64'입니다.
+  e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(110): note: 서식 문자열에서 '%lld'을(를) 사용하는 것이 좋습니다.
+  e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(110): note: 서식 문자열에서 '%Id'을(를) 사용하는 것이 좋습니다.
+  e:\00_36study\jsyprojects\180611 sample_01\180611_sample.cpp(110): note: 서식 문자열에서 '%I64d'을(를) 사용하는 것이 좋습니다.
+  180611 Sample_01.vcxproj -> E:\00_36Study\JSYProjects\180611 Sample_01\../output\180611 Sample_01.exe

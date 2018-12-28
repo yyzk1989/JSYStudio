@@ -1,0 +1,7 @@
+﻿  Employee.cpp
+e:\00_36study\jsyprojects\180627_s01_sample\employee.cpp(8): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: 'strcpy' 선언을 참조하십시오.
+e:\00_36study\jsyprojects\180627_s01_sample\employee.cpp(18): error C2440: '초기화 중': 'const char [5]'에서 'char *'(으)로 변환할 수 없습니다.
+  e:\00_36study\jsyprojects\180627_s01_sample\employee.cpp(18): note: 문자열 리터럴로부터의 변환은 const 한정자가 손실됩니다(/Zc:strictStrings 참조).
+e:\00_36study\jsyprojects\180627_s01_sample\employee.cpp(19): error C2440: 'return': 'char *'에서 'int'(으)로 변환할 수 없습니다.
+  e:\00_36study\jsyprojects\180627_s01_sample\employee.cpp(19): note: 이 변환이 가능한 컨텍스트가 없습니다.

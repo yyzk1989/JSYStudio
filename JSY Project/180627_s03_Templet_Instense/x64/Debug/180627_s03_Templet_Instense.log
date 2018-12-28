@@ -1,0 +1,13 @@
+﻿  Instense.cpp
+e:\00_36study\jsyprojects\180627_s03_templet_instense\instense.cpp(16): error C2668: 'std::swap': 오버로드된 함수에 대한 호출이 모호합니다.
+  e:\00_36study\jsyprojects\180627_s03_templet_instense\instense.cpp(5): note: 'void swap<int>(T &,T &)'일 수 있습니다.
+          with
+          [
+              T=int
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.14.26428\include\utility(63): note: 또는       'void std::swap<std::ios_base::iostate,void>(_Ty &,_Ty &) noexcept'
+          with
+          [
+              _Ty=std::ios_base::iostate
+          ]
+  e:\00_36study\jsyprojects\180627_s03_templet_instense\instense.cpp(16): note: 인수 목록 '(int, int)'을(를) 일치시키는 동안
