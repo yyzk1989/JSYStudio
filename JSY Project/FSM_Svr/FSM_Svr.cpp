@@ -19,9 +19,20 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 
 		if (pUser)
 		{
-			I_Server.SendMsg(pUser->m_Socket, "환영! 대화명 입력하시오\n", PACKET_CHAR_NAME_REQ);
+			//I_Server.SendMsg(pUser->m_Socket, "환영! 대화명 입력하시오\n", PACKET_CHAR_NAME_REQ);
 			m_UserList.push_back(pUser);
 
+			Packet pack;
+			float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
+			fX = 400;
+			fY = 300;
+			fCX = 800;
+			fCY = 600;
+			fMaxCX = 800;
+			fMaxCY = 600;
+
+			pack.SetID(PACKET_PLAYER_CREATE_LOBY) << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
+			m_PacketPool.AddPacket((PACKET&)pack);
 			I_ServerIOCP.AddHandleToIOCP((HANDLE)socket, (ULONG_PTR)pUser);
 			pUser->Create();
 		}
@@ -87,6 +98,33 @@ void FSM_Svr::DeleteUser(FSM_User* pDeleteUser)
 		I_Server.m_UserList.erase(delUser);
 	}
 };
+void FSM_Svr::IndividualSend(UPACKET* pPacket, SOCKET SendSocket)
+{
+	{
+		Synchronize sync(this);
+		std::list<FSM_User*>::iterator	iter;
+		std::list<FSM_User*>::iterator	delUser;
+
+		int iClientUser = I_Server.m_UserList.size();
+		for (iter = I_Server.m_UserList.begin();
+			iter != I_Server.m_UserList.end();
+			iter++)
+		{
+			FSM_User* pUser = (FSM_User*)*iter;
+			if( pUser->m_Socket == SendSocket )
+			{
+				int iRet = send(pUser->m_Socket, (char*)pPacket, pPacket->ph.len, 0);
+				if (iRet < 0)
+				{
+					I_Debug.T_ERROR(false);
+					continue;
+				}
+			}
+			printf("IndividualSend - %s에게 %s 보냈습니다.\n", pUser->m_szName.c_str(), pPacket->msg);
+			//I_Debug.Print("%s에게 %s 보냈습니다.", pUser->m_szName.c_str(), pPacket->msg);
+		}
+	}
+}
 void FSM_Svr::Broadcastting(UPACKET* pPacket, SOCKET SendSocket)
 {
 	{

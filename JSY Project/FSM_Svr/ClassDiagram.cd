@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FSM_Accept" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAACAAAAA=</HashCode>
+      <FileName>FSM_Accept.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FSM_PacketPool" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAACAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>FSM_PacketPool.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FSM_Sample" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>FSM_Sample.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FSM_Svr" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAASACAAAAEAAAAAAAAAAAAAABgAoACABBEAAI=</HashCode>
+      <FileName>FSM_Svr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FSM_User" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAAAAAAEAQAAEBQAAAAQAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>FSM_User.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="__unnamed_struct_0031_1" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAQAAAAAAAAAAIAIAAAAAAAAAQA=</HashCode>
+      <FileName>FSM_Protocol.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="TPACKET_USER_POSITION" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FSM_Protocol.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

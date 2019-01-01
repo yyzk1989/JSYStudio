@@ -6,6 +6,7 @@
 class FSM_PacketPool : public PacketPool
 {
 public:
+	bool		AddPacket(PACKET& addPacket);
 	void		ProcessWork(PACKET* pUserData);
 public:
 	FSM_PacketPool();
