@@ -5,7 +5,7 @@
 
 #define PACKETBUFFERSIZE   8192
 
-class Packet
+class T_Packet
 {
 public:
 	typedef struct {
@@ -25,34 +25,34 @@ public:
 	void			ReadData(void* buffer, int iSize);
 	void			WriteData(void* buffer, int iSize);
 
-	Packet&		SetID(unsigned short ID);
+	T_Packet&		SetID(unsigned short ID);
 	// 패킷을 생성할 때 
-	Packet&     operator << (int arg);
+	T_Packet&     operator << (int arg);
 	// 패킷에서 데이터를 추출할 때
-	Packet&     operator >> (int& arg);
+	T_Packet&     operator >> (int& arg);
 
-	Packet&     operator << (DWORD arg);
-	Packet&     operator >> (DWORD& arg);
+	T_Packet&     operator << (DWORD arg);
+	T_Packet&     operator >> (DWORD& arg);
 
-	Packet&     operator << (bool arg);
-	Packet&     operator >> (bool& arg);
+	T_Packet&     operator << (bool arg);
+	T_Packet&     operator >> (bool& arg);
 
-	Packet&     operator << (unsigned short arg);
-	Packet&     operator >> (unsigned short& arg);
+	T_Packet&     operator << (unsigned short arg);
+	T_Packet&     operator >> (unsigned short& arg);
 
-	Packet&     operator << (float arg);
-	Packet&     operator >> (float& arg);
+	T_Packet&     operator << (float arg);
+	T_Packet&     operator >> (float& arg);
 
-	Packet&     operator << (char* arg);
-	Packet&     operator >> (char* arg);
-	Packet&     operator << (Packet& arg);
-	Packet&     operator >> (Packet& arg);
+	T_Packet&     operator << (char* arg);
+	T_Packet&     operator >> (char* arg);
+	T_Packet&     operator << (T_Packet& arg);
+	T_Packet&     operator >> (T_Packet& arg);
 
 	char*			GetData();
 	void   Clear();
 public:
-	Packet();
-	Packet(unsigned short type);
-	virtual ~Packet();
+	T_Packet();
+	T_Packet(unsigned short type);
+	virtual ~T_Packet();
 };
 

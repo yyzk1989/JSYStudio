@@ -10,28 +10,28 @@
 // TPacket packet(1002);
 // packet << id << ps;
 // packet >> id >> ps;
-WORD Packet::GetID()
+WORD T_Packet::GetID()
 {
 	return *m_PacketHeader.type;
 }
-WORD Packet::GetSize()
+WORD T_Packet::GetSize()
 {
 	return *m_PacketHeader.len;
 }
-char* Packet::GetData()
+char* T_Packet::GetData()
 {
 	return m_strPacketBuffer;
 }
-int Packet::GetDataSize()
+int T_Packet::GetDataSize()
 {
 	return m_iReceivedSize;
 }
-void Packet::ReadData(void* buffer, int iSize)
+void T_Packet::ReadData(void* buffer, int iSize)
 {
 	::CopyMemory(buffer, m_pstrReadPosition, iSize);
 	m_pstrReadPosition += iSize;
 };
-void Packet::WriteData(void* buffer, int iSize)
+void T_Packet::WriteData(void* buffer, int iSize)
 {
 	if (m_iReceivedSize >= PACKETBUFFERSIZE - 4)
 	{
@@ -44,73 +44,73 @@ void Packet::WriteData(void* buffer, int iSize)
 	// 실제 데이터의 바이트 용량
 	m_iReceivedSize += iSize;
 };
-Packet& Packet::SetID(unsigned short ID)
+T_Packet& T_Packet::SetID(unsigned short ID)
 {
 	*m_PacketHeader.type = ID;
 	return *this;
 };
 // 패킷을 생성할 때 sum = a.v + b.v + c.v + d.v + e.v;
-Packet& Packet::operator << (int arg)
+T_Packet& T_Packet::operator << (int arg)
 {
 	WriteData(&arg, sizeof(int));
 	return *this;
 };
 // 패킷에서 데이터를 추출할 때
-Packet&  Packet::operator >> (int& arg)
+T_Packet&  T_Packet::operator >> (int& arg)
 {
 	ReadData(&arg, sizeof(int));
 	return *this;
 };
 
-Packet&     Packet::operator << (DWORD arg) {
+T_Packet&     T_Packet::operator << (DWORD arg) {
 	WriteData(&arg, sizeof(DWORD));
 	return *this;
 };
-Packet&     Packet::operator >> (DWORD& arg) {
+T_Packet&     T_Packet::operator >> (DWORD& arg) {
 	ReadData(&arg, sizeof(DWORD));
 	return *this;
 };
 
-Packet&     Packet::operator << (bool arg) {
+T_Packet&     T_Packet::operator << (bool arg) {
 	WriteData(&arg, sizeof(bool));
 	return *this;
 };
-Packet&     Packet::operator >> (bool& arg) {
+T_Packet&     T_Packet::operator >> (bool& arg) {
 	ReadData(&arg, sizeof(bool));
 	return *this;
 };
 
-Packet&     Packet::operator << (unsigned short arg) {
+T_Packet&     T_Packet::operator << (unsigned short arg) {
 	WriteData(&arg, sizeof(unsigned short));
 	return *this;
 };
-Packet&     Packet::operator >> (unsigned short& arg) {
+T_Packet&     T_Packet::operator >> (unsigned short& arg) {
 	ReadData(&arg, sizeof(unsigned short));
 	return *this;
 };
 
-Packet&     Packet::operator << (float arg) {
+T_Packet&     T_Packet::operator << (float arg) {
 	WriteData(&arg, sizeof(float));
 	return *this;
 };
-Packet&     Packet::operator >> (float& arg) {
+T_Packet&     T_Packet::operator >> (float& arg) {
 	ReadData(&arg, sizeof(float));
 	return *this;
 };
 
-Packet&     Packet::operator << (char* arg)
+T_Packet&     T_Packet::operator << (char* arg)
 {
 	int iLen = sizeof(char)*strlen(arg);
 	WriteData(&arg, iLen);
 	return *this;
 };
-Packet&     Packet::operator >> (char* arg)
+T_Packet&     T_Packet::operator >> (char* arg)
 {
 	int iLen = sizeof(char)*strlen(this->m_pstrReadPosition);
 	ReadData(&arg, sizeof(char)*iLen);
 	return *this;
 };
-Packet&     Packet::operator << (Packet& arg)
+T_Packet&     T_Packet::operator << (T_Packet& arg)
 {
 	unsigned short type = arg.GetID();
 	unsigned short size = arg.GetSize();
@@ -120,7 +120,7 @@ Packet&     Packet::operator << (Packet& arg)
 	WriteData(&arg.m_pstrWritePosition, size - 4);
 	return *this;
 };
-Packet&     Packet::operator >> (Packet& arg)
+T_Packet&     T_Packet::operator >> (T_Packet& arg)
 {
 	int type, size;
 	char buffer[4096] = { 0, };
@@ -132,7 +132,7 @@ Packet&     Packet::operator >> (Packet& arg)
 	arg.WriteData(buffer, size - 4);
 	return *this;
 };
-void Packet::Clear()
+void T_Packet::Clear()
 {
 	ZeroMemory(m_strPacketBuffer, PACKETBUFFERSIZE);
 	m_PacketHeader.len = (WORD*)m_strPacketBuffer + 0;
@@ -142,17 +142,17 @@ void Packet::Clear()
 	m_iReceivedSize = 0;
 	*m_PacketHeader.len = 4;
 }
-Packet::Packet(void)
+T_Packet::T_Packet(void)
 {
 	Clear();
 	SetID(0);
 };
-Packet::Packet(unsigned short type)
+T_Packet::T_Packet(unsigned short type)
 {
 	Clear();
 	SetID(type);
 };
-Packet::~Packet(void)
+T_Packet::~T_Packet(void)
 {
 }
 

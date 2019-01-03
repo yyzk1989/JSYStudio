@@ -19,10 +19,10 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 
 		if (pUser)
 		{
-			//I_Server.SendMsg(pUser->m_Socket, "환영! 대화명 입력하시오\n", PACKET_CHAR_NAME_REQ);
 			m_UserList.push_back(pUser);
 
-			Packet pack;
+			T_Packet tpack;
+			PACKET PCK_data;
 			float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
 			fX = 400;
 			fY = 300;
@@ -30,9 +30,14 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 			fCY = 600;
 			fMaxCX = 800;
 			fMaxCY = 600;
+			tpack.SetID(PACKET_PLAYER_CREATE_LOBY) << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
 
-			pack.SetID(PACKET_PLAYER_CREATE_LOBY) << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
-			m_PacketPool.AddPacket((PACKET&)pack);
+			PCK_data.pUser = pUser;
+			PCK_data.packet.ph.type = PACKET_PLAYER_CREATE_LOBY;
+			PCK_data.packet.ph.len = sizeof(tpack);
+			memcpy(PCK_data.packet.msg, tpack.m_pstrWritePosition,tpack.m_iReceivedSize);
+			
+			m_PacketPool.AddPacket(PCK_data);
 			I_ServerIOCP.AddHandleToIOCP((HANDLE)socket, (ULONG_PTR)pUser);
 			pUser->Create();
 		}
