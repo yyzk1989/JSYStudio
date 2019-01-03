@@ -4,6 +4,14 @@
 #include "FSM_Svr.h"
 #include "FSM_User.h"
 
+bool FSM_PacketPool::AddPacket(PACKET& addPacket)
+{
+	{
+		Synchronize sync(this);
+		m_PacketList.push_back(addPacket);
+	}
+	return true;
+}
 
 void FSM_PacketPool::ProcessWork(PACKET* pUserData)
 {
@@ -39,6 +47,12 @@ void FSM_PacketPool::ProcessWork(PACKET* pUserData)
 		pPacket->ph.type = PACKET_CHAR_MSG;
 		I_Server.Broadcastting(pPacket, pUser->m_Socket);
 	}break;
+	case PACKET_PLAYER_CREATE_LOBY:
+	{
+		char buffer[256] = { 0, };
+		I_Server.IndividualSend(pPacket, pUser->m_Socket);
+		break;
+	}
 	}
 }
 

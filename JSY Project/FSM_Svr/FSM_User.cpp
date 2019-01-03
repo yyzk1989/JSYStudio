@@ -4,12 +4,11 @@
 void FSM_User::Movement(UPACKET* pPacket)
 {
 	TPACKET_USER_POSITION user;
-	memcpy(&user, pPacket->msg, sizeof(char)*
-		pPacket->ph.len - 4);
+	memcpy(&user, pPacket->msg, sizeof(char)* pPacket->ph.len - 4);
 	m_iIndex = user.user_idx;
-	m_PositionX = user.posX;
-	m_PositionY = user.posY;
-	m_iDirection = user.direction;
+	m_PositionX = user.shX;
+	m_PositionY = user.shY;
+	m_iDirection = user.bDirection;
 };
 void FSM_User::AddPacket(PACKET& addPacket)
 {

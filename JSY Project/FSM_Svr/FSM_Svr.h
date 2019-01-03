@@ -29,6 +29,7 @@ public:
 	void	Broadcastting(char* msg, WORD code, SOCKET SendSocket = 0);
 	void	Broadcastting(PACKET* pUserData);
 	void	Broadcastting(UPACKET* pPacket, SOCKET pSendUser = NULL);
+	void	IndividualSend(UPACKET* pPacket, SOCKET SendSocket = NULL);
 public:
 	FSM_Svr();
 	~FSM_Svr();
