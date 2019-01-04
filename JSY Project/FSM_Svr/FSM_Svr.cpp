@@ -22,6 +22,7 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 			m_UserList.push_back(pUser);
 
 			I_Server.SendProtocol(pUser->m_Socket, PACKET_PLAYER_CREATE_LOBY);
+
 			/*190104
 			T_Packet tpack;
 			PACKET PCK_data;
