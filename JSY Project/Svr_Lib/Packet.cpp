@@ -35,7 +35,7 @@ void T_Packet::WriteData(void* buffer, int iSize)
 {
 	if (m_iReceivedSize >= PACKETBUFFERSIZE - 4)
 	{
-		// 오류
+		int k = 0;// 오류
 	}
 	*m_PacketHeader.len += iSize;
 	CopyMemory(m_pstrWritePosition, buffer, iSize);

@@ -33,6 +33,9 @@
     <ClInclude Include="FSM_Sample.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="FSM_Struct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM_User.cpp">

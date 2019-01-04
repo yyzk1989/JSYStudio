@@ -3,6 +3,7 @@
 #include "ServerIOCP.h"
 #include "DebugString.h"
 
+
 bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 {
 	{
@@ -20,10 +21,23 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 		if (pUser)
 		{			
 			m_UserList.push_back(pUser);
+			char * data_MSG = NULL;
+			/*
+			
+			stFSM_Back_Ground stLOBY;
+			
+			stLOBY.fX=400;
+			stLOBY.fY=300;
 
-			I_Server.SendProtocol(pUser->m_Socket, PACKET_PLAYER_CREATE_LOBY);
-
-			/*190104
+			stLOBY.fCX=800;
+			stLOBY.fCY=600;
+			
+			stLOBY.fMaxCX=800;
+			stLOBY.fMaxCY=600;
+			*/
+			//I_Server.SendProtocol(pUser->m_Socket, PACKET_PLAYER_CREATE_LOBY);
+		
+			//190104
 			T_Packet tpack;
 			PACKET PCK_data;
 			float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
@@ -33,21 +47,44 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 			fCY = 600;
 			fMaxCX = 800;
 			fMaxCY = 600;
-			tpack.SetID(PACKET_PLAYER_CREATE_LOBY) << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
+			tpack.SetID(PACKET_PLAYER_CREATE_LOBY);
+			tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
+			//tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
 
 			PCK_data.pUser = pUser;
 			PCK_data.packet.ph.type = PACKET_PLAYER_CREATE_LOBY;
 			PCK_data.packet.ph.len = sizeof(tpack);
-			memcpy(PCK_data.packet.msg, tpack.m_pstrWritePosition,tpack.m_iReceivedSize);
+			//memcpy(PCK_data.packet.msg, tpack.m_pstrWritePosition, tpack.m_iReceivedSize);
+			memcpy(PCK_data.packet.msg, tpack.m_pstrWritePosition, tpack.m_iReceivedSize);
 			
 			m_PacketPool.AddPacket(PCK_data);
-			*/
+	
+
+			//memcpy(data_MSG, (char*)&stLOBY,sizeof(stLOBY));
+			//I_Server.SEND_MAP_INFO(pUser->m_Socket, stLOBY, PACKET_PLAYER_CREATE_LOBY);
+			// I_Server.SendMsg(pUser->m_Socket, data_MSG, PACKET_PLAYER_CREATE_LOBY);
 			I_ServerIOCP.AddHandleToIOCP((HANDLE)socket, (ULONG_PTR)pUser);
 			pUser->Create();
 		}
 	}
 	return true;
 }
+
+bool FSM_Svr::SEND_MAP_INFO(SOCKET SendSocket, stFSM_Back_Ground InfoData, WORD code)
+{
+	stFSM_Back_Ground send_data;
+	ZeroMemory(&send_data, sizeof(send_data));
+	//memcpy(send_data, InfoData);
+	InfoData.type = code;
+	InfoData.len = sizeof(InfoData);
+	int iRet = send(SendSocket, (char*)&InfoData, sizeof(InfoData), 0);
+	if (iRet <= 0)
+	{
+		return false;
+	}
+	return true;
+}
+
 void FSM_Svr::DeleteUser(SOCKET socket)
 {
 	{

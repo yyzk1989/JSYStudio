@@ -3,7 +3,8 @@
 #include <windows.h>
 #include "Protocol.h"
 
-#define PACKETBUFFERSIZE   8192
+//#define PACKETBUFFERSIZE   8192
+#define PACKETBUFFERSIZE   2048
 
 class T_Packet
 {

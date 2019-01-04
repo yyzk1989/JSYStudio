@@ -4,6 +4,7 @@
 #include "FSM_PacketPool.h"
 #include "FSM_Accept.h"
 #include "FSM_User.h"
+#include "FSM_Struct.h"
 
 class FSM_Svr : public Singleton<FSM_Svr>, public Server
 {
@@ -30,6 +31,8 @@ public:
 	void	Broadcastting(PACKET* pUserData);
 	void	Broadcastting(UPACKET* pPacket, SOCKET pSendUser = NULL);
 	void	IndividualSend(UPACKET* pPacket, SOCKET SendSocket = NULL);
+
+	bool	SEND_MAP_INFO(SOCKET SendSocket, stFSM_Back_Ground InfoData, WORD code);
 public:
 	FSM_Svr();
 	~FSM_Svr();
