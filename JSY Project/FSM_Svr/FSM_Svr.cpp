@@ -18,9 +18,11 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 		//printf("\n클라이언트 접속 : IP:%s, PORT:%d\n",inet_ntoa(clientAddr.sin_addr), ntohs(clientSocket));
 
 		if (pUser)
-		{
+		{			
 			m_UserList.push_back(pUser);
 
+			I_Server.SendProtocol(pUser->m_Socket, PACKET_PLAYER_CREATE_LOBY);
+			/*190104
 			T_Packet tpack;
 			PACKET PCK_data;
 			float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
@@ -38,6 +40,7 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 			memcpy(PCK_data.packet.msg, tpack.m_pstrWritePosition,tpack.m_iReceivedSize);
 			
 			m_PacketPool.AddPacket(PCK_data);
+			*/
 			I_ServerIOCP.AddHandleToIOCP((HANDLE)socket, (ULONG_PTR)pUser);
 			pUser->Create();
 		}

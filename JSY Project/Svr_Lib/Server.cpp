@@ -23,8 +23,7 @@ bool Server::SendMsg(SOCKET socket, char* msg, WORD code)
 	//sprintf( sendmsg.msg, "%s", msg );
 	sprintf_s(sendmsg.msg, "%s", msg);
 	sendmsg.ph.type = code;
-	sendmsg.ph.len = sizeof(PACKET_HEADER) +
-		strlen(sendmsg.msg);
+	sendmsg.ph.len = sizeof(PACKET_HEADER) + strlen(sendmsg.msg);
 	int iRet = send(socket, (char*)&sendmsg, sendmsg.ph.len, 0);
 	if (iRet <= 0)
 	{
