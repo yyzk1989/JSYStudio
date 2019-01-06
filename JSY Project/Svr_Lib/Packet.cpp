@@ -18,6 +18,7 @@ WORD T_Packet::GetSize()
 {
 	return *m_PacketHeader.len;
 }
+
 char* T_Packet::GetData()
 {
 	return m_strPacketBuffer;
@@ -137,8 +138,10 @@ void T_Packet::Clear()
 	ZeroMemory(m_strPacketBuffer, PACKETBUFFERSIZE);
 	m_PacketHeader.len = (WORD*)m_strPacketBuffer + 0;
 	m_PacketHeader.type = (WORD*)m_strPacketBuffer + 2;
-	m_pstrWritePosition = &m_strPacketBuffer[4];
-	m_pstrReadPosition = &m_strPacketBuffer[4];
+	//m_pstrWritePosition = &m_strPacketBuffer[4];
+	//m_pstrReadPosition = &m_strPacketBuffer[4];
+	m_pstrWritePosition = &m_strPacketBuffer[6];
+	m_pstrReadPosition = &m_strPacketBuffer[6];
 	m_iReceivedSize = 0;
 	*m_PacketHeader.len = 4;
 }
@@ -146,11 +149,21 @@ T_Packet::T_Packet(void)
 {
 	Clear();
 	SetID(0);
+	/*
+	m_uPacket.ph.type = 0;
+	m_uPacket.ph.len = 0;
+	m_pstrWritePosition = m_uPacket.msg;
+	*/
 };
 T_Packet::T_Packet(unsigned short type)
 {
 	Clear();
 	SetID(type);
+	/*
+	m_uPacket.ph.type = type;
+	m_uPacket.ph.len = PACKET_HEADER_SIZE;
+	m_pstrWritePosition = m_uPacket.msg;
+	*/
 };
 T_Packet::~T_Packet(void)
 {

@@ -21,6 +21,7 @@ public:
 
 	WORD			GetID();
 	WORD			GetSize();
+	UPACKET			getPacket();
 	int				m_iReceivedSize;
 	int				GetDataSize();
 	void			ReadData(void* buffer, int iSize);

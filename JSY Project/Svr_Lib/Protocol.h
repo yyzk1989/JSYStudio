@@ -9,7 +9,17 @@ typedef struct {
 	WORD type;
 }PACKET_HEADER;
 
-typedef struct {
+typedef struct UPACKET {
+
+	UPACKET()
+	{
+		ZeroMemory(msg, 2048);
+	}
+	UPACKET& operator = (const UPACKET& rhs)
+	{
+		CopyMemory(this, &rhs, sizeof(UPACKET));
+		return *this;
+	}
 	PACKET_HEADER ph;
 	char     msg[2048];
 }UPACKET, *P_UPACKET;

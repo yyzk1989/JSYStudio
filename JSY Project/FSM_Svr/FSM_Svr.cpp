@@ -38,7 +38,7 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 			//I_Server.SendProtocol(pUser->m_Socket, PACKET_PLAYER_CREATE_LOBY);
 		
 			//190104
-			T_Packet tpack;
+			
 			PACKET PCK_data;
 			float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
 			fX = 400;
@@ -47,19 +47,26 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 			fCY = 600;
 			fMaxCX = 800;
 			fMaxCY = 600;
-			tpack.SetID(PACKET_PLAYER_CREATE_LOBY);
-			tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
+			//tpack.SetID(PACKET_PLAYER_CREATE_LOBY);
 			//tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
-
+			
+			
+			T_Packet tpack(PACKET_PLAYER_CREATE_LOBY); 
+			tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
+			//tpack.SetID(2000) << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
+			tpack.m_strPacketBuffer;
 			PCK_data.pUser = pUser;
+			/*
+			PCK_data.packet.ph.len = tpack.m_iReceivedSize + PACKET_HEADER_SIZE;
 			PCK_data.packet.ph.type = PACKET_PLAYER_CREATE_LOBY;
-			PCK_data.packet.ph.len = sizeof(tpack);
-			//memcpy(PCK_data.packet.msg, tpack.m_pstrWritePosition, tpack.m_iReceivedSize);
-			memcpy(PCK_data.packet.msg, tpack.m_pstrWritePosition, tpack.m_iReceivedSize);
+			*/
+			PCK_data.packet.ph.len = *tpack.m_PacketHeader.len;
+			PCK_data.packet.ph.type = *tpack.m_PacketHeader.type;
+
+			memcpy(PCK_data.packet.msg , tpack.m_strPacketBuffer + 6, PACKETBUFFERSIZE - 6);
 			
 			m_PacketPool.AddPacket(PCK_data);
-	
-
+				
 			//memcpy(data_MSG, (char*)&stLOBY,sizeof(stLOBY));
 			//I_Server.SEND_MAP_INFO(pUser->m_Socket, stLOBY, PACKET_PLAYER_CREATE_LOBY);
 			// I_Server.SendMsg(pUser->m_Socket, data_MSG, PACKET_PLAYER_CREATE_LOBY);
