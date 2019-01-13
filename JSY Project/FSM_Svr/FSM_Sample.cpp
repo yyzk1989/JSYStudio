@@ -7,7 +7,6 @@ bool   FSM_Sample::Init()
 {
 	I_ServerIOCP.Init();
 	I_Server.Init();
-	//m_Sock.Init();
 	CreateThread();
 	return true;
 }
@@ -16,7 +15,7 @@ int main()
 {
 	FSM_Sample server;
 
-	server.Init();
+	server.Init();	
 	server.Run();
 
 

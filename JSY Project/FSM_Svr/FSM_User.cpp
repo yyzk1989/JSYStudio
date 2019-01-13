@@ -5,15 +5,28 @@ void FSM_User::Movement(UPACKET* pPacket)
 {
 	TPACKET_USER_POSITION user;
 	memcpy(&user, pPacket->msg, sizeof(char)* pPacket->ph.len - 4);
-	m_iIndex = user.user_idx;
-	m_PositionX = user.shX;
-	m_PositionY = user.shY;
-	m_iDirection = user.bDirection;
+	MyMegaman.m_iIndex = user.user_idx;
+	MyMegaman.m_fPositionX = user.shX;
+	MyMegaman.m_fPositionY = user.shY;
+	MyMegaman.m_bDirection = user.bDirection;
+
 };
 void FSM_User::AddPacket(PACKET& addPacket)
 {
 	I_Server.m_PacketPool.AddPacket(addPacket);
 }
+int FSM_User::SendPacket(PACKET& addPacket, UPACKET* pPacket)
+{
+	
+	int iRet = send(addPacket.pUser->m_Socket, (char*)pPacket, pPacket->ph.len, 0);
+	if (iRet == SOCKET_ERROR)
+	{
+		printf("SendPacket()");
+		return 1;
+	}
+	return 0;
+}
+
 void FSM_User::DeleteUser(SOCKET socket)
 {
 	I_Server.DeleteUser(socket);

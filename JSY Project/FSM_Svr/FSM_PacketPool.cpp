@@ -13,8 +13,20 @@ bool FSM_PacketPool::AddPacket(PACKET& addPacket)
 	return true;
 }
 
-void FSM_PacketPool::ProcessWork(PACKET* pUserData)
+
+bool FSM_PacketPool::SendPacket(UPACKET* pPacket, SOCKET SendSocket)
 {
+	{
+		Synchronize sync(this);
+		send(SendSocket, (char*)pPacket, pPacket->ph.len, 0);
+
+				
+	}
+	return true;
+}
+
+void FSM_PacketPool::ProcessWork(PACKET* pUserData)
+{ 
 	UPACKET* pPacket = &(pUserData->packet);
 	FSM_User*   pUser = (FSM_User*)pUserData->pUser;
 	switch (pPacket->ph.type)
@@ -53,6 +65,25 @@ void FSM_PacketPool::ProcessWork(PACKET* pUserData)
 		I_Server.IndividualSend(pPacket, pUser->m_Socket);
 		break;
 	}
+
+	case cl_PACKET_PLAYER_SEND_STARTBTN_1:
+	{
+		char buffer[256] = { 0 };
+		T_Packet tmp_packet;
+		WORD type, len;
+		
+		tmp_packet.WriteData(pPacket, pPacket->ph.len);
+
+		tmp_packet >> len;
+		tmp_packet >> type;
+		tmp_packet >> pUser->MyMegaman.i_NOW_Stage;
+		
+		sprintf_s(buffer, "%s님 %d", pUser->m_szName.c_str(), pUser->MyMegaman.i_NOW_Stage, "스테이지 입장");
+		printf("%s\n", buffer);
+
+		break;
+	}
+
 	}
 }
 

@@ -19,26 +19,12 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 		//printf("\n클라이언트 접속 : IP:%s, PORT:%d\n",inet_ntoa(clientAddr.sin_addr), ntohs(clientSocket));
 
 		if (pUser)
-		{			
+		{	
 			m_UserList.push_back(pUser);
+			
 			char * data_MSG = NULL;
-			/*
-			
-			stFSM_Back_Ground stLOBY;
-			
-			stLOBY.fX=400;
-			stLOBY.fY=300;
 
-			stLOBY.fCX=800;
-			stLOBY.fCY=600;
-			
-			stLOBY.fMaxCX=800;
-			stLOBY.fMaxCY=600;
-			*/
-			//I_Server.SendProtocol(pUser->m_Socket, PACKET_PLAYER_CREATE_LOBY);
-		
-			//190104
-			
+			//190107		
 			PACKET PCK_data;
 			float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
 			fX = 400;
@@ -47,30 +33,20 @@ bool FSM_Svr::AddUser(SOCKET socket, SOCKADDR_IN address)
 			fCY = 600;
 			fMaxCX = 800;
 			fMaxCY = 600;
-			//tpack.SetID(PACKET_PLAYER_CREATE_LOBY);
-			//tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
-			
-			
+				
 			T_Packet tpack(PACKET_PLAYER_CREATE_LOBY); 
-			tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
-			//tpack.SetID(2000) << fX << fY << fCX << fCY << fMaxCX << fMaxCY;
+			tpack << fX << fY << fCX << fCY << fMaxCX << fMaxCY << 0;
 			tpack.m_strPacketBuffer;
+			
 			PCK_data.pUser = pUser;
-			/*
-			PCK_data.packet.ph.len = tpack.m_iReceivedSize + PACKET_HEADER_SIZE;
-			PCK_data.packet.ph.type = PACKET_PLAYER_CREATE_LOBY;
-			*/
 			PCK_data.packet.ph.len = *tpack.m_PacketHeader.len;
 			PCK_data.packet.ph.type = *tpack.m_PacketHeader.type;
 
 			memcpy(PCK_data.packet.msg , tpack.m_strPacketBuffer + 6, PACKETBUFFERSIZE - 6);
 			
 			m_PacketPool.AddPacket(PCK_data);
-				
-			//memcpy(data_MSG, (char*)&stLOBY,sizeof(stLOBY));
-			//I_Server.SEND_MAP_INFO(pUser->m_Socket, stLOBY, PACKET_PLAYER_CREATE_LOBY);
-			// I_Server.SendMsg(pUser->m_Socket, data_MSG, PACKET_PLAYER_CREATE_LOBY);
 			I_ServerIOCP.AddHandleToIOCP((HANDLE)socket, (ULONG_PTR)pUser);
+
 			pUser->Create();
 		}
 	}
@@ -274,11 +250,143 @@ void FSM_Svr::Broadcastting(char* msg, WORD code, SOCKET SendSocket)
 		}
 	}
 };
+
+bool FSM_Svr::CreateMyMegaman(FSM_User* pUser)
+{
+	PACKET PCK_data;
+	float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
+	pUser->MyMegaman.m_bDirection = false;
+	pUser->MyMegaman.m_bCharacter = true;
+	pUser->MyMegaman.m_fPositionX = 440;
+	pUser->MyMegaman.m_fPositionY = 400;
+	//fY = -2000;
+	fCX = 260;
+	fCY = 260;
+	fMaxCX = 4420;
+	fMaxCY = 6760;
+
+
+	T_Packet tpack(PACKET_CREATE_MY_MEGAMAN);
+	tpack << pUser->MyMegaman.m_fPositionX << pUser->MyMegaman.m_fPositionY << fCX << fCY << fMaxCX << fMaxCY << pUser->MyMegaman.m_bDirection;
+	tpack.m_strPacketBuffer;
+
+	PCK_data.pUser = pUser;
+	PCK_data.packet.ph.len = *tpack.m_PacketHeader.len;
+	PCK_data.packet.ph.type = *tpack.m_PacketHeader.type;
+
+	memcpy(PCK_data.packet.msg, tpack.m_strPacketBuffer + 6, PACKETBUFFERSIZE - 6);
+	m_PacketPool.SendPacket((UPACKET*)&(PCK_data.packet), pUser->m_Socket);
+	//m_PacketPool.AddPacket(PCK_data);
+	return 0;
+}
+
+bool FSM_Svr::CreateOtherMegaman(FSM_User* pUser, SOCKET SendSocket)
+{
+	PACKET PCK_data;
+	float  fX, fY, fCX, fCY, fMaxCX, fMaxCY;
+	pUser->MyMegaman.m_bDirection = false;
+	pUser->MyMegaman.m_bCharacter = true;
+	fX = 440;
+	fY = 400;
+	//fY = -2000;
+	fCX = 260;
+	fCY = 260;
+	fMaxCX = 4420;
+	fMaxCY = 6760;
+
+
+	T_Packet tpack(PACKET_CREATE_OTHER_MEGAMAN);
+	tpack << pUser->MyMegaman.m_fPositionX << pUser->MyMegaman.m_fPositionY << fCX << fCY << fMaxCX << fMaxCY << pUser->MyMegaman.m_bDirection;
+	tpack.m_strPacketBuffer;
+
+	PCK_data.pUser = pUser;
+	PCK_data.packet.ph.len = *tpack.m_PacketHeader.len;
+	PCK_data.packet.ph.type = *tpack.m_PacketHeader.type;
+
+	memcpy(PCK_data.packet.msg, tpack.m_strPacketBuffer + 6, PACKETBUFFERSIZE - 6);
+
+
+	std::list<FSM_User*>::iterator	iter;
+	std::list<FSM_User*>::iterator	delUser;
+
+	int iClientUser = I_Server.m_UserList.size();
+	for (iter = I_Server.m_UserList.begin();
+		iter != I_Server.m_UserList.end();
+		iter++)
+	{
+		FSM_User* pUser = (FSM_User*)*iter;
+		if (pUser->m_Socket != SendSocket)
+		{
+			if (!m_PacketPool.SendPacket((UPACKET*)&(PCK_data.packet), pUser->m_Socket))
+			{
+				I_Debug.T_ERROR(false);
+				continue;
+			}
+		}
+		printf("CreateOtherMegaman - %s 보냈습니다.\n", pUser->m_szName.c_str());
+		//I_Debug.Print("%s%s%s", pUser->m_szName.c_str(), msg, "보냈습니다.");
+	}
+
+	return 0;
+}
+
+bool FSM_Svr::ActCheckMegaman(FSM_User* pUser)
+{
+
+	return 0;
+}
+
+bool FSM_Svr::GameProc()
+{
+	check_Time += g_fSecPerFrame;
+
+	if (check_Time > 3)
+	{
+		{
+			Synchronize sync(this);
+			std::list<FSM_User*>::iterator	iter;
+			std::list<FSM_User*>::iterator	delUser;
+
+			bool b_ret;
+
+			int iClientUser = I_Server.m_UserList.size();
+			for (iter = I_Server.m_UserList.begin();
+				iter != I_Server.m_UserList.end();
+				iter++)
+			{
+				FSM_User* pUser = (FSM_User*)*iter;
+				
+				if (pUser->MyMegaman.i_NOW_Stage == 1)
+				{
+					if (pUser->MyMegaman.m_bCharacter == false)
+					{
+						b_ret = CreateMyMegaman( pUser);
+						
+						b_ret = CreateOtherMegaman(pUser, pUser->m_Socket);
+					}
+					
+					if (pUser->MyMegaman.m_bCharacter == true)
+					{
+						b_ret = ActCheckMegaman(pUser);
+					}
+
+					printf("Time Test - IP = %s, PORT = %d \n", inet_ntoa(pUser->m_UserAddress.sin_addr), ntohs(pUser->m_Socket));
+
+				}
+			}
+		}
+		check_Time = 0;
+	}
+	return 0;
+}
+
+
 bool FSM_Svr::Init()
 {
 	printf("Sever Start\n");
 	// I_Debug.Print("%s", "서버 시작합니다.");
 	Server::Init();
+	FSM_Timer::Init();
 	m_Acceptor.Set(10000, NULL);
 	return true;
 }
@@ -290,7 +398,9 @@ bool FSM_Svr::Run()
 {
 	while (m_bStarted)
 	{
+		FSM_Timer::Frame();
 		m_PacketPool.ProcessPacket();
+		GameProc();
 		Sleep(10);
 	}
 	return true;

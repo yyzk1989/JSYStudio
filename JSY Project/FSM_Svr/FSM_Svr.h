@@ -5,11 +5,14 @@
 #include "FSM_Accept.h"
 #include "FSM_User.h"
 #include "FSM_Struct.h"
+#include "FSM_Timer.h"
 
-class FSM_Svr : public Singleton<FSM_Svr>, public Server
+class FSM_Svr : public Singleton<FSM_Svr>, public Server , public FSM_Timer
 {
 private:
 	friend class Singleton<FSM_Svr>;
+
+	float check_Time;
 public:
 	FSM_PacketPool   m_PacketPool;
 	FSM_Accept       m_Acceptor;
@@ -32,7 +35,16 @@ public:
 	void	Broadcastting(UPACKET* pPacket, SOCKET pSendUser = NULL);
 	void	IndividualSend(UPACKET* pPacket, SOCKET SendSocket = NULL);
 
+
+	bool	GameProc();
+	bool	CreateMyMegaman(FSM_User* pUser);
+	bool	CreateOtherMegaman(FSM_User* pUser, SOCKET SendSocket);
+	bool	ActCheckMegaman(FSM_User* pUser);
+	bool	CreateEnemy(FSM_User* pUser);
+	
 	bool	SEND_MAP_INFO(SOCKET SendSocket, stFSM_Back_Ground InfoData, WORD code);
+
+
 public:
 	FSM_Svr();
 	~FSM_Svr();

@@ -97,6 +97,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>../../lib/svr</AdditionalLibraryDirectories>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -148,18 +149,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="FSM_Accept.h" />
+    <ClInclude Include="FSM_Enemy.h" />
+    <ClInclude Include="FSM_Megaman_Info.h" />
     <ClInclude Include="FSM_PacketPool.h" />
     <ClInclude Include="FSM_Protocol.h" />
     <ClInclude Include="FSM_Sample.h" />
     <ClInclude Include="FSM_Struct.h" />
     <ClInclude Include="FSM_Svr.h" />
+    <ClInclude Include="FSM_Timer.h" />
     <ClInclude Include="FSM_User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM_Accept.cpp" />
+    <ClCompile Include="FSM_Enemy.cpp" />
+    <ClCompile Include="FSM_Megaman_Info.cpp" />
     <ClCompile Include="FSM_PacketPool.cpp" />
     <ClCompile Include="FSM_Sample.cpp" />
     <ClCompile Include="FSM_Svr.cpp" />
+    <ClCompile Include="FSM_Timer.cpp" />
     <ClCompile Include="FSM_User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

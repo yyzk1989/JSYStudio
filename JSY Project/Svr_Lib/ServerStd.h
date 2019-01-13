@@ -16,6 +16,8 @@
 
 typedef std::basic_string<char>  C_STR;
 
+extern float	g_fSecPerFrame;
+
 template<class T> class Singleton
 {
 public:

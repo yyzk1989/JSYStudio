@@ -24,15 +24,17 @@ public:
 	UPACKET			getPacket();
 	int				m_iReceivedSize;
 	int				GetDataSize();
-	void			ReadData(void* buffer, int iSize);
+	//void			ReadData(void* buffer, int iSize);
+	void			ReadData(char* buffer, int iSize);
 	void			WriteData(void* buffer, int iSize);
+	//void			WriteData(char* buffer, int iSize);
 
 	T_Packet&		SetID(unsigned short ID);
 	// 패킷을 생성할 때 
 	T_Packet&     operator << (int arg);
 	// 패킷에서 데이터를 추출할 때
 	T_Packet&     operator >> (int& arg);
-
+	
 	T_Packet&     operator << (DWORD arg);
 	T_Packet&     operator >> (DWORD& arg);
 

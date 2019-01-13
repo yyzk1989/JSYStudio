@@ -12,7 +12,20 @@ typedef struct _OVERLAPPEDEX : OVERLAPPED
 
 class User : public ServerObj
 {
+	// 캐릭터 정보
+public:
+	/*
+	int				m_iIndex;
+	float			m_fPositionX;
+	float			m_fPositionY;
+	bool			m_bDirection;
 
+	int				i_HP = 15;
+	int				i_Attack = 1; //charge는 4
+
+	int				i_NOW_Stage = 0;
+	bool			m_bCharacter = false;
+	*/
 public:
 	StreamPacket	m_StreamPacket;
 	SOCKET			m_Socket;
